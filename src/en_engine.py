@@ -46,7 +46,8 @@ class en_dictionary(object):
                 self.custom_translation.append(element)
             elif element.tag == "yodao-link":
                 self.yodao_link = element.text
-
+            elif element.tag == "example-sentences":
+                self.example_sentences = element
 
     def unpack_cn_custom_translation(self):
         if len(self.custom_translation) >= 1:
@@ -93,3 +94,14 @@ class en_dictionary(object):
         bus.connect('message::eos', on_eos)
         mainloop = gobject.MainLoop()
         mainloop.run()
+
+    def example_sentence(self):
+        sentences = []
+        i = 0
+        for x in self.example_sentences:
+            if i < 3:
+                sentence = {x[0]:x[2]}
+                sentences.append(sentence)
+                i = i + 1
+        return sentences
+        

@@ -13,9 +13,10 @@ Usage: ldict [option1] [option2]... [word]
 Option		GNU long option		Meaning
 -f              --forms                 查询单词其他格式
 -s              --speak                 发音
+-e              --example-sentences     双语例句
 """
 
-def lookup(word, is_speak, is_forms, is_web_translatation):
+def lookup(word, is_speak, is_forms, is_web_translatation, is_example_sentences):
     if word == "":
         print u"ldict: 要输入单词的哦！"
         sys.exit()
@@ -33,6 +34,14 @@ def lookup(word, is_speak, is_forms, is_web_translatation):
             print "\t"
             for x in word_forms.keys():
                 print x + ":" + word_forms[x]
+        if is_example_sentences:
+            print "\t"
+            print  "\033[22;36;40m双语例句:\033[0m" 
+            example_sentences = mydictionary.example_sentence()
+            for x in example_sentences:
+                for key in x.keys():
+                    print  "\033[1;36;40m%s\033[0m" %key.text
+                    print x[key].text + "\n"
         if is_speak:
             mydictionary.speak()
 
@@ -45,7 +54,8 @@ def main():
     is_speak = False
     is_forms = False
     is_web_translatation = False
-    word =""
+    is_example_sentences = False
+    word = ""
     
     for x in sys.argv[1:]:
         if x == "--speak" or x == "-s":
@@ -54,6 +64,8 @@ def main():
             is_forms = True
         elif x == "--web-translation" or x == "-w":
             is_web_translatation = True
+        elif x == "--example-sentences" or x == "-e":
+            is_example_sentences = True
         else:
             if x[0] == "-":
                 print "ldict: 未知操作, 别乱来啊... -________-'' "
@@ -62,7 +74,7 @@ def main():
             else:
                 word = x
 
-    lookup(word, is_speak, is_forms, is_web_translatation)
+    lookup(word, is_speak, is_forms, is_web_translatation, is_example_sentences)
     
 if __name__ == "__main__":
     main()
