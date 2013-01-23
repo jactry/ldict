@@ -52,12 +52,12 @@ def en_lookup(word, is_speak, is_forms, is_web_translatation, is_example_sentenc
                 print x + ":" + word_forms[x]
         if is_example_sentences:
             print "\t"
-            print  "\033[22;36;40m双语例句:\033[0m" 
+            print  "\033[22;36;40m双语例句:\033[0m"
             example_sentences = mydictionary.example_sentence()
-            for x in example_sentences:
-                for key in x.keys():
-                    print  "\033[1;36;40m%s\033[0m" %key.text
-                    print x[key].text + "\n"
+            for x in example_sentences.keys():
+                print  "\033[1;36;40m%s\033[0m" %x
+                print example_sentences[x] + "\n"
+
         if is_speak:
             mydictionary.speak()
 

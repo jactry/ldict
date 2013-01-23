@@ -96,14 +96,12 @@ class en_dictionary(object):
         bus.connect('message::eos', on_eos)
         mainloop = gobject.MainLoop()
         mainloop.run()
-
+        
     def example_sentence(self):
-        sentences = []
+        sentences = {}
         i = 0
         for x in self.example_sentences:
             if i < 3:
-                sentence = {x[0]:x[2]}
-                sentences.append(sentence)
+                sentences[x[0].text] = x[2].text
                 i = i + 1
         return sentences
-        
