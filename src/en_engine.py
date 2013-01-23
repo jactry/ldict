@@ -3,8 +3,13 @@
 
 import sys
 import os
-import xml.etree.cElementTree as ET
 import urllib2
+
+try:
+    import xml.etree.cElementTree as ET
+except ImportError:
+    import xml.etree.ElementTree as ET
+
 
 class en_dictionary(object):
     def __init__(self, word):
@@ -12,7 +17,7 @@ class en_dictionary(object):
         filename = os.getenv("HOME") + "/.ldict/dict/" + self.word_quote + ".xml"
         if os.path.exists(filename) != True:
             xml = urllib2.urlopen("http://dict.youdao.com/search?le=eng&q="+ self.word_quote
-                                  +"&xmlDetail=true&doctype=xml",None,0.5).read()
+                                  +"&xmlDetail=true&doctype=xml", timeout = 1).read()
             f = open(filename, 'w')
             f.write(xml)
             f.close()
@@ -32,7 +37,6 @@ class en_dictionary(object):
         
         self.unpack_root(root)
         self.unpack_cn_custom_translation()
-
         
     def unpack_root(self, root):
         for element in root:
@@ -58,18 +62,16 @@ class en_dictionary(object):
                     for element in child:
                         self.all_word_forms.append(element)
 
-
     def word_forms(self):        
         elements_wordforms = {}
         for x in self.all_word_forms:
             i = 0
-            while(i<len(x)):
+            while i < len(x):
                 if x[i].tag == "value":
                     elements_wordforms[x[i-1].text] = x[i].text
                 i = i + 1
         return elements_wordforms
 
-    
     def speak(self):
         audiofile = os.getenv("HOME") + "/.ldict/audio/" + self.word_quote + ".mp3"
         if os.path.exists(audiofile) != True:

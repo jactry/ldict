@@ -3,6 +3,7 @@
 
 import sys
 from en_engine import en_dictionary
+from fanyi_engine import fanyi_dictionary
 
 def help():
     print """
@@ -20,9 +21,24 @@ def lookup(word, is_speak, is_forms, is_web_translatation, is_example_sentences)
     if word == "":
         print u"ldict: 要输入单词的哦！"
         sys.exit()
+    if len(word) > 255:
+        fanyi_lookup(word)
+    else:
+        en_lookup(word, is_speak, is_forms, is_web_translatation, is_example_sentences)
+
+def fanyi_lookup(word):
+    mydictionary = fanyi_dictionary(word)
+    if mydictionary.errorCode == "0":
+        print "\033[1;34;40m%s\033[0m" %word
+        if mydictionary.phonetic != "":
+            print  "\033[1;31;40m[%s]\033[0m" %mydictionary.phonetic
+        print "\n有道翻译:"
+        print  "\033[1;36;40m%s\033[0m" %mydictionary.translation
+
+def en_lookup(word, is_speak, is_forms, is_web_translatation, is_example_sentences):
     mydictionary = en_dictionary(word)
     if mydictionary.return_phrase == "":
-        print "ldict: 呃！真的有这个词？(⊙o⊙)"
+        fanyi_lookup(word)
     else:
         print "\033[1;34;40m%s\033[0m" %mydictionary.return_phrase
         if mydictionary.phonetic_symbol != None:
@@ -44,7 +60,6 @@ def lookup(word, is_speak, is_forms, is_web_translatation, is_example_sentences)
                     print x[key].text + "\n"
         if is_speak:
             mydictionary.speak()
-
 
 def main():
     if len(sys.argv) < 2:
