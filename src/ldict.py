@@ -15,16 +15,17 @@ Option		GNU long option		Meaning
 -f              --forms                 查询单词其他格式
 -s              --speak                 发音
 -e              --example-sentences     双语例句
+-c              --web-explains          网络词组
 """
 
-def lookup(word, is_speak, is_forms, is_web_translatation, is_example_sentences):
+def lookup(word, is_speak, is_forms, is_web_translatation, is_example_sentences, is_web_explains):
     if word == "":
         print u"ldict: 要输入单词的哦！"
         sys.exit()
     if len(word) > 255:
         fanyi_lookup(word)
     else:
-        en_lookup(word, is_speak, is_forms, is_web_translatation, is_example_sentences)
+        en_lookup(word, is_speak, is_forms, is_web_translatation, is_example_sentences, is_web_explains)
 
 def fanyi_lookup(word):
     mydictionary = fanyi_dictionary(word)
@@ -35,7 +36,7 @@ def fanyi_lookup(word):
         print "\n有道翻译:"
         print  "\033[1;36;40m%s\033[0m" %mydictionary.translation
 
-def en_lookup(word, is_speak, is_forms, is_web_translatation, is_example_sentences):
+def en_lookup(word, is_speak, is_forms, is_web_translatation, is_example_sentences, is_web_explains):
     mydictionary = en_dictionary(word)
     if mydictionary.return_phrase == "":
         fanyi_lookup(word)
@@ -50,6 +51,15 @@ def en_lookup(word, is_speak, is_forms, is_web_translatation, is_example_sentenc
             print "\t"
             for x in word_forms.keys():
                 print x + ":" + word_forms[x]
+        if is_web_explains:
+            myfanyi = fanyi_dictionary(word)
+            if myfanyi.errorCode == "0":
+                web_explains = myfanyi.web_explains()
+                print "\n\033[22;36;40m网络词组:\033[0m"
+                for explain in web_explains.keys():
+                    print  "\033[1;36;40m%s\033[0m" %explain
+                    for value in web_explains[explain]:
+                        print value
         if is_example_sentences:
             print "\t"
             print  "\033[22;36;40m双语例句:\033[0m"
@@ -57,7 +67,6 @@ def en_lookup(word, is_speak, is_forms, is_web_translatation, is_example_sentenc
             for x in example_sentences.keys():
                 print  "\033[1;36;40m%s\033[0m" %x
                 print example_sentences[x] + "\n"
-
         if is_speak:
             mydictionary.speak()
 
@@ -70,6 +79,7 @@ def main():
     is_forms = False
     is_web_translatation = False
     is_example_sentences = False
+    is_web_explains = False
     word = ""
     
     for x in sys.argv[1:]:
@@ -81,6 +91,8 @@ def main():
             is_web_translatation = True
         elif x == "--example-sentences" or x == "-e":
             is_example_sentences = True
+        elif x == "--web-explains" or x == "-c":
+            is_web_explains = True
         else:
             if x[0] == "-":
                 print "ldict: 未知操作, 别乱来啊... -________-'' "
@@ -89,7 +101,7 @@ def main():
             else:
                 word = x
 
-    lookup(word, is_speak, is_forms, is_web_translatation, is_example_sentences)
+    lookup(word, is_speak, is_forms, is_web_translatation, is_example_sentences, is_web_explains)
     
 if __name__ == "__main__":
     main()

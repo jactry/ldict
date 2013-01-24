@@ -38,11 +38,9 @@ class fanyi_dictionary(object):
         self.phonetic = ""
         self.explains = []
         self.web = []
-        self.web_explains = {}
 
         self.unpack_root(root)
         self.unpack_basic()
-        self.unpack_web()
         
     def unpack_root(self, root):
         for element in root:
@@ -66,15 +64,17 @@ class fanyi_dictionary(object):
                 for child in element:
                     self.explains.append(child.text)
 
-    def unpack_web(self):
+    def web_explains(self):
+        web_explains = {}
         for element in self.web:
             key = ""
             value = []
             for child in element:
                 if child.tag == "value":
                     for ex in child:
-                        value.append(ex)
+                        value.append(ex.text)
                 elif child.tag == "key":
                    key = child.text
-            self.web_explains[key] = value
+            web_explains[key] = value
+        return web_explains
                     
