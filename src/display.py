@@ -11,10 +11,11 @@ ldict - dictionary for Linux! o(*≧▽≦)ツ
 Usage: ldict [option1] [option2]... [word]
 
 Option		GNU long option		Meaning
+-a              --add                   添加单词到有道单词本
+-c              --web-explains          网络词组
+-e              --example-sentences     双语例句
 -f              --forms                 查询单词其他格式
 -s              --speak                 发音
--e              --example-sentences     双语例句
--c              --web-explains          网络词组
 '''
 
 def fanyi_lookup(word):
@@ -23,11 +24,11 @@ def fanyi_lookup(word):
         if mydictionary.translation == "":
             print "ldict: 呃！真的有这个词？(⊙o⊙)"
         else:
-            print "\033[1;34;40m%s\033[0m" %word
+            print "\033[1;34;40m%s\033[0m" % word
             if mydictionary.phonetic != "":
-                print  "\033[1;31;40m[%s]\033[0m" %mydictionary.phonetic
+                print  "\033[1;31;40m[%s]\033[0m" % mydictionary.phonetic
             print "\n有道翻译:"
-            print  "\033[1;36;40m%s\033[0m" %mydictionary.translation
+            print  "\033[1;36;40m%s\033[0m" % mydictionary.translation
 
 def display_forms(dictionary):
     word_forms = dictionary.word_forms()
@@ -41,7 +42,7 @@ def display_web_explains(word):
         web_explains = myfanyi.web_explains()
         print "\n\033[22;36;40m网络词组:\033[0m"
         for explain in web_explains.keys():
-            print  "\033[1;36;40m%s\033[0m" %explain
+            print  "\033[1;36;40m%s\033[0m" % explain
             for value in web_explains[explain]:
                 print value
 def display_web_sencences(dictionary):
@@ -49,7 +50,7 @@ def display_web_sencences(dictionary):
     print  "\033[22;36;40m双语例句:\033[0m"
     example_sentences = dictionary.example_sentence()
     for x in example_sentences.keys():
-        print  "\033[1;36;40m%s\033[0m" %x
+        print  "\033[1;36;40m%s\033[0m" % x
         print example_sentences[x]
         
 def en_lookup(word, is_speak, is_forms, is_web_translatation,
@@ -58,11 +59,11 @@ def en_lookup(word, is_speak, is_forms, is_web_translatation,
     if mydictionary.return_phrase == "":
         fanyi_lookup(word)
     else:
-        print "\033[1;34;40m%s\033[0m" %mydictionary.return_phrase
+        print "\033[1;34;40m%s\033[0m" % mydictionary.return_phrase
         if mydictionary.phonetic_symbol != None:
-            print  "\033[1;31;40m[%s]\033[0m" %mydictionary.phonetic_symbol
+            print  "\033[1;31;40m[%s]\033[0m" % mydictionary.phonetic_symbol
         for x in mydictionary.cn_translation:
-            print  "\033[1;36;40m%s\033[0m" %x
+            print  "\033[1;36;40m%s\033[0m" % x
         if is_forms:
             display_forms(mydictionary)
         if is_web_explains:

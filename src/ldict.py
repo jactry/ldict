@@ -3,7 +3,7 @@
 
 import sys
 import display
-
+import wordbook
 
 def main():
     if len(sys.argv) < 2:
@@ -15,6 +15,7 @@ def main():
     is_web_translatation = False 
     is_example_sentences = False # 是否查询双语例句
     is_web_explains = False # 是否查询网络词组
+    is_add_to_wordbook = False # 是否添加到单词本
     word = "" # 请求查询单词
     
     for x in sys.argv[1:]:
@@ -28,6 +29,8 @@ def main():
             is_example_sentences = True
         elif x == "--web-explains" or x == "-c":
             is_web_explains = True
+        elif x == "--add" or x == "-a":
+            is_add_to_wordbook = True
         else:
             if x[0] == "-":
                 print "ldict: 未知操作, 别乱来啊... -________-'' "
@@ -38,6 +41,8 @@ def main():
 
     display.lookup(word, is_speak, is_forms, is_web_translatation,
                    is_example_sentences, is_web_explains)
-    
+    if is_add_to_wordbook:
+        wordbook.add_to_wordbook(word)
+        
 if __name__ == "__main__":
     main()
