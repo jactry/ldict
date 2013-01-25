@@ -64,7 +64,7 @@ def en_lookup(word, is_speak, is_forms, is_web_translatation,
         for x in mydictionary.cn_translation:
             print  "\033[1;36;40m%s\033[0m" %x
         if is_forms:
-            display_forms()
+            display_forms(mydictionary)
         if is_web_explains:
             display_web_explains(word)
         if is_example_sentences:

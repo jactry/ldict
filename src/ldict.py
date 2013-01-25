@@ -36,7 +36,8 @@ def main():
             else:
                 word = x
 
-        display.lookup(word, is_speak, is_forms, is_web_translatation, is_example_sentences, is_web_explains)
+    display.lookup(word, is_speak, is_forms, is_web_translatation,
+                   is_example_sentences, is_web_explains)
     
 if __name__ == "__main__":
     main()
