@@ -11,7 +11,7 @@ LinDitc--dictionary for Linux!
 
     `$ cd ~/ldict`
 	
-    `$ python ~/ldict/setup.py`
+    `$ python setup.py`
 	
 3. 发音选项 `--speak` 需要 **gstreamer0.10-fluendo-mp3** 支持，Debian 和 Ubuntu 用户可以通过以下命令安装：
 
@@ -28,5 +28,6 @@ LinDitc--dictionary for Linux!
 ### 截图
 
 ![截图](http://gitcafe.com/Jactry/ldict/raw/master/images/ldict.png)
+
 
 
