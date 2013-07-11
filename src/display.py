@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import sys
 from en_engine import en_dictionary
 from fanyi_engine import fanyi_dictionary
 

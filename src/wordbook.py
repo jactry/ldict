@@ -6,18 +6,20 @@ import sys
 import httplib2
 import urllib
 
+filename = os.getenv("HOME") + "/.ldict/user"
+    
 def login():
     username = ""
     password = ""
-    filename = os.getenv("HOME") + "/.ldict/user"
+
     if os.path.exists(filename) == True:
         f = open(filename, 'r')
         username = f.readline().strip()
         password = f.readline().strip()
         f.close()
     else:
-        username = raw_input(u"用户名:")
-        password = raw_input(u"密码:")
+        username = raw_input(u"用户名:".encode('utf-8'))
+        password = raw_input(u"密码:".encode('utf-8'))
 
         f = open(filename, 'w')
         f.write(username + "\n")
@@ -63,5 +65,8 @@ def add_to_wordbook(word):
     if content == '{"message":"adddone"}':
         print u"\n已添加 %s 到单词本 ^_^" % word
     else:
-        print u"\n添加失败... ::>.<::" % word
-        print content
+        content = eval(content)
+        if content['message'] == 'nouser':
+            print u"\n用户名或者密码错误哦!所以...添加 \"%s\" 失败... ::>.<::" % word
+            os.remove(filename)
+
