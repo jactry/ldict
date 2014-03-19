@@ -27,7 +27,7 @@ LinDitc--dictionary for Linux!
 
 ### 截图
 
-![截图](http://gitcafe.com/Jactry/ldict/raw/master/images/ldict.png)
+![截图](https://raw.githubusercontent.com/Jactry/ldict/master/images/ldict.png)
 
 
 
