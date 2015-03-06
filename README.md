@@ -1,4 +1,4 @@
-LinDitc--dictionary for Linux!    
+LinDict--dictionary for Linux!
 ====
 
 ### 安装
